@@ -19,8 +19,9 @@ const posts = files.map((filename) => {
   const filePath = path.join(postsDir, filename);
   const content = fs.readFileSync(filePath, "utf8");
 
-  // Front Matter 파싱
-  const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  // Front Matter 파싱 (CRLF와 LF 모두 지원)
+  const frontMatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/;
+  const frontMatterMatch = content.match(frontMatterRegex);
   let metadata = {};
   let postContent = content;
 
@@ -29,7 +30,7 @@ const posts = files.map((filename) => {
     postContent = frontMatterMatch[2];
 
     // Front Matter 라인 파싱
-    const lines = frontMatter.split("\n");
+    const lines = frontMatter.split(/\r?\n/);
     lines.forEach((line) => {
       const colonIndex = line.indexOf(":");
       if (colonIndex > 0) {
@@ -47,12 +48,14 @@ const posts = files.map((filename) => {
         // 배열 파싱 (tags)
         if (key === "tags" && value.startsWith("[") && value.endsWith("]")) {
           try {
+            // JSON.parse로 시도
             value = JSON.parse(value);
           } catch {
+            // 실패시 수동 파싱
             value = value
               .slice(1, -1)
               .split(",")
-              .map((tag) => tag.trim().replace(/^['"]|['"]$/g, ""));
+              .map((tag) => tag.trim().replace(/^["']|["']$/g, ""));
           }
         }
 
