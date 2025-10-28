@@ -24,6 +24,7 @@ Git은 **분산 버전 관리 시스템**으로, 코드의 변경사항을 추�
 ### Git 설치
 
 **Windows:**
+
 ```bash
 # Chocolatey를 사용하는 경우
 choco install git
@@ -33,6 +34,7 @@ choco install git
 ```
 
 **macOS:**
+
 ```bash
 # Homebrew를 사용하는 경우
 brew install git
@@ -42,6 +44,7 @@ xcode-select --install
 ```
 
 **Linux (Ubuntu/Debian):**
+
 ```bash
 sudo apt update
 sudo apt install git
@@ -90,6 +93,7 @@ git status
 ```
 
 출력 예시:
+
 ```
 On branch main
 Your branch is up to date with 'origin/main'.
@@ -122,6 +126,7 @@ git add src/
 ```
 
 **스테이징 영역이란?**
+
 - 커밋할 준비가 된 파일들이 모이는 곳
 - `git add`로 파일을 스테이징 영역에 추가
 - `git commit`으로 스테이징 영역의 파일들을 저장소에 저장
@@ -144,6 +149,7 @@ git commit -am "간단한 수정"
 ```
 
 **좋은 커밋 메시지 작성 팁:**
+
 - 첫 줄: 간단하고 명확하게 (50자 이내)
 - 두 번째 줄: 빈 줄
 - 세 번째 줄 이후: 자세한 설명
@@ -232,6 +238,7 @@ git branch -D feature/login
 ### 브랜치 전략
 
 **Git Flow 브랜치 전략:**
+
 - `main`: 프로덕션 배포용
 - `develop`: 개발용 메인 브랜치
 - `feature/*`: 새로운 기능 개발
@@ -332,6 +339,7 @@ touch .gitignore
 ```
 
 **.gitignore 예시:**
+
 ```gitignore
 # Dependencies
 node_modules/
@@ -434,6 +442,7 @@ git push -u origin main
 ### 4. "Merge conflict"
 
 **해결 과정:**
+
 ```bash
 # 충돌 파일 열어서 수정
 # <<<<<<<, =======, >>>>>>> 표시 부분 수정
@@ -461,6 +470,7 @@ git config --global alias.co checkout
 ### 3. Git GUI 도구
 
 명령어가 익숙하지 않다면 GUI 도구를 사용해보세요:
+
 - **GitHub Desktop**: 직관적인 인터페이스
 - **GitKraken**: 강력한 기능
 - **VS Code**: 내장 Git 기능
@@ -470,6 +480,7 @@ git config --global alias.co checkout
 Git은 처음에는 복잡해 보일 수 있지만, 기본 명령어 몇 개만 익혀도 충분히 사용할 수 있습니다. 이 가이드에서 소개한 명령어들만 잘 익혀도 대부분의 개발 작업을 문제없이 수행할 수 있습니다.
 
 **기억할 핵심 명령어:**
+
 - `git status`: 상태 확인
 - `git add .`: 변경사항 스테이징
 - `git commit -m "메시지"`: 커밋
@@ -480,4 +491,4 @@ Git을 활용하면 코드 관리와 협업이 훨씬 효율적으로 이루어�
 
 ---
 
-*더 자세한 내용은 [Git 공식 문서](https://git-scm.com/book/ko/v2)를 참고하시기 바랍니다.*
+_더 자세한 내용은 [Git 공식 문서](https://git-scm.com/book/ko/v2)를 참고하시기 바랍니다._
