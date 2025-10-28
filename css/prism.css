@@ -1,0 +1,286 @@
+/* Prism.js 테마 - 다크/라이트 모드 대응 */
+
+/* 기본 코드 블록 스타일 */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: var(--text-primary);
+  background: none;
+  text-shadow: none;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* 코드 블록 */
+pre[class*="language-"] {
+  padding: 1rem;
+  margin: 1.5rem 0;
+  overflow: auto;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+/* 인라인 코드 */
+:not(pre) > code[class*="language-"] {
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  background-color: var(--bg-tertiary);
+  color: var(--accent-color);
+  font-size: 0.9em;
+}
+
+/* 토큰 스타일 */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--text-secondary);
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #e74c3c;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #27ae60;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--accent-color);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #8e44ad;
+}
+
+.token.function,
+.token.class-name {
+  color: #f39c12;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e67e22;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* 다크 모드에서의 색상 조정 */
+[data-theme="dark"] .token.property,
+[data-theme="dark"] .token.tag,
+[data-theme="dark"] .token.boolean,
+[data-theme="dark"] .token.number,
+[data-theme="dark"] .token.constant,
+[data-theme="dark"] .token.symbol,
+[data-theme="dark"] .token.deleted {
+  color: #ff6b6b;
+}
+
+[data-theme="dark"] .token.selector,
+[data-theme="dark"] .token.attr-name,
+[data-theme="dark"] .token.string,
+[data-theme="dark"] .token.char,
+[data-theme="dark"] .token.builtin,
+[data-theme="dark"] .token.inserted {
+  color: #51cf66;
+}
+
+[data-theme="dark"] .token.operator,
+[data-theme="dark"] .token.entity,
+[data-theme="dark"] .token.url,
+[data-theme="dark"] .language-css .token.string,
+[data-theme="dark"] .style .token.string {
+  color: var(--accent-color-dark);
+}
+
+[data-theme="dark"] .token.atrule,
+[data-theme="dark"] .token.attr-value,
+[data-theme="dark"] .token.keyword {
+  color: #da77f2;
+}
+
+[data-theme="dark"] .token.function,
+[data-theme="dark"] .token.class-name {
+  color: #ffd43b;
+}
+
+[data-theme="dark"] .token.regex,
+[data-theme="dark"] .token.important,
+[data-theme="dark"] .token.variable {
+  color: #ffa94d;
+}
+
+/* 라인 번호 (선택사항) */
+.line-numbers .line-numbers-rows {
+  border-right: 1px solid var(--border-color);
+  padding-right: 1rem;
+  margin-right: 1rem;
+}
+
+.line-numbers-rows > span:before {
+  color: var(--text-muted);
+  content: counter(linenumber);
+  counter-increment: linenumber;
+}
+
+/* 복사 버튼 (선택사항) */
+.code-block-wrapper {
+  position: relative;
+}
+
+.code-block-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.code-block-copy:hover {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* 특정 언어별 스타일 */
+.language-javascript .token.function,
+.language-js .token.function {
+  color: #f39c12;
+}
+
+.language-css .token.selector {
+  color: #8e44ad;
+}
+
+.language-html .token.tag {
+  color: #e74c3c;
+}
+
+.language-html .token.attr-name {
+  color: #f39c12;
+}
+
+.language-html .token.attr-value {
+  color: #27ae60;
+}
+
+.language-json .token.property {
+  color: #8e44ad;
+}
+
+.language-json .token.string {
+  color: #27ae60;
+}
+
+.language-json .token.number {
+  color: #e74c3c;
+}
+
+/* 다크 모드에서의 언어별 스타일 */
+[data-theme="dark"] .language-javascript .token.function,
+[data-theme="dark"] .language-js .token.function {
+  color: #ffd43b;
+}
+
+[data-theme="dark"] .language-css .token.selector {
+  color: #da77f2;
+}
+
+[data-theme="dark"] .language-html .token.tag {
+  color: #ff6b6b;
+}
+
+[data-theme="dark"] .language-html .token.attr-name {
+  color: #ffd43b;
+}
+
+[data-theme="dark"] .language-html .token.attr-value {
+  color: #51cf66;
+}
+
+[data-theme="dark"] .language-json .token.property {
+  color: #da77f2;
+}
+
+[data-theme="dark"] .language-json .token.string {
+  color: #51cf66;
+}
+
+[data-theme="dark"] .language-json .token.number {
+  color: #ff6b6b;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  pre[class*="language-"] {
+    padding: 0.75rem;
+    margin: 1rem 0;
+    font-size: 0.8em;
+  }
+  
+  :not(pre) > code[class*="language-"] {
+    font-size: 0.8em;
+    padding: 0.15rem 0.3rem;
+  }
+}
+
+/* 접근성 */
+@media (prefers-reduced-motion: reduce) {
+  .code-block-copy {
+    transition: none;
+  }
+}
+
+/* 포커스 스타일 */
+.code-block-copy:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}

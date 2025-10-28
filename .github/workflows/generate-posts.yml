@@ -1,0 +1,125 @@
+name: Generate Posts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "pages/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "pages/**"
+
+jobs:
+  generate-posts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          npm install -g front-matter
+          npm install -g js-yaml
+
+      - name: Generate posts.json
+        run: |
+          echo "📚 게시글 메타데이터 생성 중..."
+
+          # posts.json 초기화
+          echo '{"posts":[]}' > posts.json
+
+          # pages 폴더의 모든 .md 파일 처리
+          if [ -d "pages" ]; then
+            echo "📁 pages 폴더에서 마크다운 파일 스캔 중..."
+            
+            # Node.js 스크립트로 posts.json 생성
+            node -e "
+              const fs = require('fs');
+              const path = require('path');
+              const frontMatter = require('front-matter');
+              
+              const posts = [];
+              const pagesDir = 'pages';
+              
+              if (fs.existsSync(pagesDir)) {
+                const files = fs.readdirSync(pagesDir).filter(file => file.endsWith('.md'));
+                
+                console.log(\`📄 \${files.length}개의 마크다운 파일 발견\`);
+                
+                files.forEach(file => {
+                  try {
+                    const filePath = path.join(pagesDir, file);
+                    const content = fs.readFileSync(filePath, 'utf8');
+                    const parsed = frontMatter(content);
+                    
+                    const post = {
+                      file: file,
+                      title: parsed.attributes.title || '제목 없음',
+                      date: parsed.attributes.date || new Date().toISOString().split('T')[0],
+                      description: parsed.attributes.description || '',
+                      tags: parsed.attributes.tags || [],
+                      category: parsed.attributes.category || '',
+                      content: parsed.body.substring(0, 200) + '...' // 미리보기용
+                    };
+                    
+                    posts.push(post);
+                    console.log(\`✅ \${file} 처리 완료\`);
+                  } catch (error) {
+                    console.error(\`❌ \${file} 처리 실패:\`, error.message);
+                  }
+                });
+                
+                // 날짜 기준 내림차순 정렬
+                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // posts.json 생성
+                const result = { posts: posts };
+                fs.writeFileSync('posts.json', JSON.stringify(result, null, 2));
+                
+                console.log(\`🎉 posts.json 생성 완료: \${posts.length}개 게시글\`);
+              } else {
+                console.log('⚠️ pages 폴더가 존재하지 않습니다.');
+              }
+            "
+          else
+            echo "⚠️ pages 폴더가 존재하지 않습니다."
+          fi
+
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -f posts.json ]; then
+            if git diff --quiet posts.json; then
+              echo "changed=false" >> $GITHUB_OUTPUT
+              echo "📝 posts.json에 변경사항이 없습니다."
+            else
+              echo "changed=true" >> $GITHUB_OUTPUT
+              echo "📝 posts.json이 업데이트되었습니다."
+            fi
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "❌ posts.json 파일이 생성되지 않았습니다."
+          fi
+
+      - name: Commit and push changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add posts.json
+          git commit -m "🤖 posts.json 자동 업데이트 [skip ci]"
+          git push
+
+      - name: Upload posts.json as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: posts-json
+          path: posts.json
+          retention-days: 30

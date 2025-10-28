@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DavidPARK0417의 블로그</title>
+    <meta name="description" content="개발과 기술에 대한 생각을 공유하는 블로그입니다.">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/prism.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="blog-title">
+                    <a href="/">DavidPARK0417의 블로그</a>
+                </h1>
+                <div class="header-controls">
+                    <!-- 검색창 -->
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="게시글 검색..." class="search-input">
+                        <button id="searchBtn" class="search-btn" aria-label="검색">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- 다크모드 토글 -->
+                    <button id="themeToggle" class="theme-toggle" aria-label="테마 전환">
+                        <svg class="theme-icon theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main">
+        <div class="container">
+            <!-- 태그 필터 -->
+            <section class="tag-filter">
+                <h2 class="tag-filter-title">태그로 필터링</h2>
+                <div id="tagContainer" class="tag-container">
+                    <button class="tag-btn active" data-tag="all">전체</button>
+                </div>
+            </section>
+
+            <!-- 검색 결과 -->
+            <section id="searchResults" class="search-results" style="display: none;">
+                <h2 class="search-results-title">검색 결과</h2>
+                <div id="searchResultsList" class="search-results-list"></div>
+            </section>
+
+            <!-- 게시글 목록 -->
+            <section class="posts">
+                <h2 class="posts-title">최신 게시글</h2>
+                <div id="postsContainer" class="posts-container">
+                    <div class="loading">게시글을 불러오는 중...</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 DavidPARK0417. All rights reserved.</p>
+            <p>Powered by GitHub Pages</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <script src="js/theme.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
