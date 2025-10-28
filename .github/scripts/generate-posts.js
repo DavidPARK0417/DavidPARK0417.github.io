@@ -90,5 +90,6 @@ const posts = files.map((filename) => {
 // 날짜순 정렬 (최신순)
 posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-fs.writeFileSync(outputFile, JSON.stringify(posts, null, 2));
+const result = { posts: posts };
+fs.writeFileSync(outputFile, JSON.stringify(result, null, 2));
 console.log(`Generated posts.json with ${posts.length} posts`);

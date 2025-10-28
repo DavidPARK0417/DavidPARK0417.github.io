@@ -1,29 +1,31 @@
-[
-  {
-    "file": "example.md",
-    "title": "GitHub Pages 블로그 첫 번째 게시글",
-    "date": "2025-01-26",
-    "tags": [
-      "JavaScript",
-      "Web",
-      "Blog",
-      "GitHub Pages"
-    ],
-    "category": "Development",
-    "description": "GitHub Pages를 사용한 정적 블로그의 첫 번째 게시글입니다. 마크다운 문법과 다양한 기능들을 소개합니다.",
-    "excerpt": "안녕하세요! DavidPARK0417의 블로그에 오신 것을 환영합니다. 이 블로그는 를 사용하여 구축된 정적 블로그입니다.\r \r \r \r 이 블로그는 다음과 같은 기능들을 제공합니다:\r \r - 📝 \r - 🔍 \r - 🏷️ \r - 🌙 \r - 💬 \r - 📱 \r \r \r \r 이 블로그는 다음과 같은 기술들로 구축되었습니다:\r \r - \r -  (마크다운 파싱..."
-  },
-  {
-    "file": "getting-started.md",
-    "title": "블로그 시작하기 - 사용 가이드",
-    "date": "2025-01-25",
-    "tags": [
-      "Guide",
-      "Tutorial",
-      "Blog"
-    ],
-    "category": "Guide",
-    "description": "이 블로그를 사용하는 방법과 게시글 작성 방법에 대한 상세한 가이드입니다.",
-    "excerpt": "이 가이드에서는 GitHub Pages 블로그를 사용하는 방법과 게시글을 작성하는 방법에 대해 알아보겠습니다.\r \r \r \r 1. (\r 2. (\r 3. (\r 4. (\r 5. (\r 6. (\r \r \r \r 이 블로그는 다음과 같은 특징을 가지고 있습니다:\r \r \r \r - : GitHub Pages를 사용한 빠른 로딩\r - : 간편한 게시글 작성\r - : 실시간 게..."
-  }
-]
+{
+  "posts": [
+    {
+      "file": "example.md",
+      "title": "GitHub Pages 블로그 첫 번째 게시글",
+      "date": "2025-01-26",
+      "tags": [
+        "JavaScript",
+        "Web",
+        "Blog",
+        "GitHub Pages"
+      ],
+      "category": "Development",
+      "description": "GitHub Pages를 사용한 정적 블로그의 첫 번째 게시글입니다. 마크다운 문법과 다양한 기능들을 소개합니다.",
+      "excerpt": "안녕하세요! DavidPARK0417의 블로그에 오신 것을 환영합니다. 이 블로그는 를 사용하여 구축된 정적 블로그입니다.\r \r \r \r 이 블로그는 다음과 같은 기능들을 제공합니다:\r \r - 📝 \r - 🔍 \r - 🏷️ \r - 🌙 \r - 💬 \r - 📱 \r \r \r \r 이 블로그는 다음과 같은 기술들로 구축되었습니다:\r \r - \r -  (마크다운 파싱..."
+    },
+    {
+      "file": "getting-started.md",
+      "title": "블로그 시작하기 - 사용 가이드",
+      "date": "2025-01-25",
+      "tags": [
+        "Guide",
+        "Tutorial",
+        "Blog"
+      ],
+      "category": "Guide",
+      "description": "이 블로그를 사용하는 방법과 게시글 작성 방법에 대한 상세한 가이드입니다.",
+      "excerpt": "이 가이드에서는 GitHub Pages 블로그를 사용하는 방법과 게시글을 작성하는 방법에 대해 알아보겠습니다.\r \r \r \r 1. (\r 2. (\r 3. (\r 4. (\r 5. (\r 6. (\r \r \r \r 이 블로그는 다음과 같은 특징을 가지고 있습니다:\r \r \r \r - : GitHub Pages를 사용한 빠른 로딩\r - : 간편한 게시글 작성\r - : 실시간 게..."
+    }
+  ]
+}
