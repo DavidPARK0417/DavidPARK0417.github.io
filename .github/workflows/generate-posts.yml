@@ -23,11 +23,6 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install dependencies
-        run: |
-          npm install -g front-matter
-          npm install -g js-yaml
-
       - name: Generate posts.json
         run: |
           echo "📚 게시글 메타데이터 생성 중..."
@@ -39,11 +34,10 @@ jobs:
           if [ -d "pages" ]; then
             echo "📁 pages 폴더에서 마크다운 파일 스캔 중..."
             
-            # Node.js 스크립트로 posts.json 생성
+            # Node.js 스크립트로 posts.json 생성 (front-matter 없이 직접 파싱)
             node -e "
               const fs = require('fs');
               const path = require('path');
-              const frontMatter = require('front-matter');
               
               const posts = [];
               const pagesDir = 'pages';
@@ -57,16 +51,56 @@ jobs:
                   try {
                     const filePath = path.join(pagesDir, file);
                     const content = fs.readFileSync(filePath, 'utf8');
-                    const parsed = frontMatter(content);
+                    
+                    // Front Matter 파싱 (간단한 버전)
+                    const frontMatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+                    const match = content.match(frontMatterRegex);
+                    
+                    let frontMatter = {};
+                    let body = content;
+                    
+                    if (match) {
+                      const frontMatterText = match[1];
+                      body = match[2];
+                      
+                      // YAML 파싱 (간단한 버전)
+                      const lines = frontMatterText.split('\n');
+                      for (const line of lines) {
+                        const trimmedLine = line.trim();
+                        if (!trimmedLine || trimmedLine.startsWith('#')) continue;
+                        
+                        const colonIndex = trimmedLine.indexOf(':');
+                        if (colonIndex === -1) continue;
+                        
+                        const key = trimmedLine.substring(0, colonIndex).trim();
+                        let value = trimmedLine.substring(colonIndex + 1).trim();
+                        
+                        // 따옴표 제거
+                        if ((value.startsWith('\"') && value.endsWith('\"')) || 
+                            (value.startsWith(\"'\") && value.endsWith(\"'\"))) {
+                          value = value.slice(1, -1);
+                        }
+                        
+                        // 배열 파싱
+                        if (value.startsWith('[') && value.endsWith(']')) {
+                          const arrayContent = value.slice(1, -1);
+                          frontMatter[key] = arrayContent.split(',').map(item => 
+                            item.trim().replace(/^['\"]|['\"]$/g, '')
+                          );
+                        } else {
+                          frontMatter[key] = value;
+                        }
+                      }
+                    }
                     
                     const post = {
                       file: file,
-                      title: parsed.attributes.title || '제목 없음',
-                      date: parsed.attributes.date || new Date().toISOString().split('T')[0],
-                      description: parsed.attributes.description || '',
-                      tags: parsed.attributes.tags || [],
-                      category: parsed.attributes.category || '',
-                      content: parsed.body.substring(0, 200) + '...' // 미리보기용
+                      title: frontMatter.title || '제목 없음',
+                      date: frontMatter.date || new Date().toISOString().split('T')[0],
+                      description: frontMatter.description || '',
+                      tags: frontMatter.tags || [],
+                      category: frontMatter.category || '',
+                      content: body.substring(0, 200).replace(/\n/g, ' ') + '...' // 미리보기용
                     };
                     
                     posts.push(post);
