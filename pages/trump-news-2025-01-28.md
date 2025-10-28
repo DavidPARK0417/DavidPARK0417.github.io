@@ -70,8 +70,9 @@ description: "도널드 트럼프 미국 대통령의 최근 발언과 행보, �
 
 ---
 
-*이 게시글은 2025년 1월 28일 기준으로 작성되었으며, 국제 정세는 빠르게 변화할 수 있으니 최신 뉴스를 참고하시기 바랍니다.*
+_이 게시글은 2025년 1월 28일 기준으로 작성되었으며, 국제 정세는 빠르게 변화할 수 있으니 최신 뉴스를 참고하시기 바랍니다._
 
 **참고 자료:**
+
 - [etoday.co.kr - 트럼프 대통령 한국 방문 관련 보도](https://www.etoday.co.kr/politics-economy/bluehouse?page=4&utm_source=openai)
 - [vietnam.vn - 우크라이나 관련 발언 보도](https://www.vietnam.vn/ko/hoa-than-kalibr-o-at-trut-xuong-ukraine-tong-thong-han-quoc-trai-long-lanh-dao-my-trung-dien-dam?utm_source=openai)
