@@ -7,9 +7,9 @@ class BlogApp {
   constructor() {
     this.posts = [];
     this.filteredPosts = [];
-    this.currentTag = 'all';
+    this.currentTag = "all";
     this.searchManager = null;
-    
+
     this.init();
   }
 
@@ -17,18 +17,18 @@ class BlogApp {
    * 초기화
    */
   async init() {
-    console.log('🚀 블로그 앱이 시작됩니다...');
-    
+    console.log("🚀 블로그 앱이 시작됩니다...");
+
     try {
       await this.loadPosts();
       this.setupSearchManager();
       this.setupTagFilter();
       this.renderPosts();
-      
-      console.log('✅ 블로그 앱이 성공적으로 초기화되었습니다.');
+
+      console.log("✅ 블로그 앱이 성공적으로 초기화되었습니다.");
     } catch (error) {
-      console.error('❌ 블로그 앱 초기화 중 오류 발생:', error);
-      this.showError('게시글을 불러오는 중 오류가 발생했습니다.');
+      console.error("❌ 블로그 앱 초기화 중 오류 발생:", error);
+      this.showError("게시글을 불러오는 중 오류가 발생했습니다.");
     }
   }
 
@@ -37,26 +37,26 @@ class BlogApp {
    */
   async loadPosts() {
     try {
-      console.log('📚 posts.json을 로드하는 중...');
-      
-      const response = await fetch('posts.json');
+      console.log("📚 posts.json을 로드하는 중...");
+
+      const response = await fetch("posts.json");
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       this.posts = data.posts || [];
       this.filteredPosts = [...this.posts];
-      
+
       console.log(`✅ ${this.posts.length}개의 게시글을 로드했습니다.`);
     } catch (error) {
-      console.error('❌ 게시글 로드 실패:', error);
-      
+      console.error("❌ 게시글 로드 실패:", error);
+
       // posts.json이 없을 때 예시 데이터 사용
       this.posts = this.getExamplePosts();
       this.filteredPosts = [...this.posts];
-      
-      console.log('📝 예시 게시글을 사용합니다.');
+
+      console.log("📝 예시 게시글을 사용합니다.");
     }
   }
 
@@ -66,21 +66,21 @@ class BlogApp {
   getExamplePosts() {
     return [
       {
-        file: 'example.md',
-        title: '첫 번째 게시글',
-        date: '2025-01-26',
-        description: 'GitHub Pages 블로그의 첫 번째 게시글입니다.',
-        tags: ['JavaScript', 'Web', 'Blog'],
-        category: 'Development'
+        file: "example.md",
+        title: "첫 번째 게시글",
+        date: "2025-01-26",
+        description: "GitHub Pages 블로그의 첫 번째 게시글입니다.",
+        tags: ["JavaScript", "Web", "Blog"],
+        category: "Development",
       },
       {
-        file: 'getting-started.md',
-        title: '블로그 시작하기',
-        date: '2025-01-25',
-        description: '이 블로그를 사용하는 방법에 대해 알아봅시다.',
-        tags: ['Guide', 'Tutorial'],
-        category: 'Guide'
-      }
+        file: "getting-started.md",
+        title: "블로그 시작하기",
+        date: "2025-01-25",
+        description: "이 블로그를 사용하는 방법에 대해 알아봅시다.",
+        tags: ["Guide", "Tutorial"],
+        category: "Guide",
+      },
     ];
   }
 
@@ -98,27 +98,27 @@ class BlogApp {
    * 태그 필터 설정
    */
   setupTagFilter() {
-    const tagContainer = document.getElementById('tagContainer');
+    const tagContainer = document.getElementById("tagContainer");
     if (!tagContainer) return;
 
     // 모든 태그 수집
     const allTags = new Set();
-    this.posts.forEach(post => {
+    this.posts.forEach((post) => {
       if (post.tags) {
-        post.tags.forEach(tag => allTags.add(tag));
+        post.tags.forEach((tag) => allTags.add(tag));
       }
     });
 
     // 태그 버튼 생성
-    const tagButtons = Array.from(allTags).map(tag => 
-      `<button class="tag-btn" data-tag="${tag}">${tag}</button>`
-    ).join('');
+    const tagButtons = Array.from(allTags)
+      .map((tag) => `<button class="tag-btn" data-tag="${tag}">${tag}</button>`)
+      .join("");
 
     tagContainer.innerHTML = `<button class="tag-btn active" data-tag="all">전체</button>${tagButtons}`;
 
     // 태그 클릭 이벤트
-    tagContainer.addEventListener('click', (e) => {
-      if (e.target.classList.contains('tag-btn')) {
+    tagContainer.addEventListener("click", (e) => {
+      if (e.target.classList.contains("tag-btn")) {
         const tag = e.target.dataset.tag;
         this.filterByTag(tag);
         this.updateActiveTag(e.target);
@@ -133,37 +133,39 @@ class BlogApp {
    */
   filterByTag(tag) {
     console.log(`🏷️ 태그 필터링: ${tag}`);
-    
+
     this.currentTag = tag;
-    
-    if (tag === 'all') {
+
+    if (tag === "all") {
       this.filteredPosts = [...this.posts];
     } else {
-      this.filteredPosts = this.posts.filter(post => 
-        post.tags && post.tags.includes(tag)
+      this.filteredPosts = this.posts.filter(
+        (post) => post.tags && post.tags.includes(tag)
       );
     }
-    
+
     this.renderPosts();
-    console.log(`✅ ${this.filteredPosts.length}개의 게시글이 필터링되었습니다.`);
+    console.log(
+      `✅ ${this.filteredPosts.length}개의 게시글이 필터링되었습니다.`
+    );
   }
 
   /**
    * 활성 태그 업데이트
    */
   updateActiveTag(clickedButton) {
-    const tagContainer = document.getElementById('tagContainer');
-    const allButtons = tagContainer.querySelectorAll('.tag-btn');
-    
-    allButtons.forEach(btn => btn.classList.remove('active'));
-    clickedButton.classList.add('active');
+    const tagContainer = document.getElementById("tagContainer");
+    const allButtons = tagContainer.querySelectorAll(".tag-btn");
+
+    allButtons.forEach((btn) => btn.classList.remove("active"));
+    clickedButton.classList.add("active");
   }
 
   /**
    * 게시글 목록 렌더링
    */
   renderPosts() {
-    const postsContainer = document.getElementById('postsContainer');
+    const postsContainer = document.getElementById("postsContainer");
     if (!postsContainer) return;
 
     if (this.filteredPosts.length === 0) {
@@ -176,7 +178,9 @@ class BlogApp {
       return;
     }
 
-    postsContainer.innerHTML = this.filteredPosts.map(post => this.renderPostCard(post)).join('');
+    postsContainer.innerHTML = this.filteredPosts
+      .map((post) => this.renderPostCard(post))
+      .join("");
   }
 
   /**
@@ -184,7 +188,9 @@ class BlogApp {
    */
   renderPostCard(post) {
     return `
-      <div class="post-card" onclick="window.location.href='post.html?file=${post.file}'">
+      <div class="post-card" onclick="window.location.href='post.html?file=${
+        post.file
+      }'">
         <h3 class="post-card-title">${post.title}</h3>
         <div class="post-card-meta">
           <span class="post-card-date">
@@ -196,14 +202,28 @@ class BlogApp {
             </svg>
             ${this.formatDate(post.date)}
           </span>
-          ${post.category ? `<span class="post-card-category">${post.category}</span>` : ''}
+          ${
+            post.category
+              ? `<span class="post-card-category">${post.category}</span>`
+              : ""
+          }
         </div>
-        ${post.description ? `<p class="post-card-description">${post.description}</p>` : ''}
-        ${post.tags ? `
+        ${
+          post.description
+            ? `<p class="post-card-description">${post.description}</p>`
+            : ""
+        }
+        ${
+          post.tags
+            ? `
           <div class="post-card-tags">
-            ${post.tags.map(tag => `<span class="post-card-tag">${tag}</span>`).join('')}
+            ${post.tags
+              .map((tag) => `<span class="post-card-tag">${tag}</span>`)
+              .join("")}
           </div>
-        ` : ''}
+        `
+            : ""
+        }
       </div>
     `;
   }
@@ -213,10 +233,10 @@ class BlogApp {
    */
   formatDate(dateString) {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   }
 
@@ -224,7 +244,7 @@ class BlogApp {
    * 오류 메시지 표시
    */
   showError(message) {
-    const postsContainer = document.getElementById('postsContainer');
+    const postsContainer = document.getElementById("postsContainer");
     if (postsContainer) {
       postsContainer.innerHTML = `
         <div class="error">
@@ -238,7 +258,7 @@ class BlogApp {
 }
 
 // DOM이 로드되면 블로그 앱 시작
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   new BlogApp();
 });
 

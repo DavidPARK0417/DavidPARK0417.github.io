@@ -1,5 +1,5 @@
 # Generated files (GitHub Actions에서 자동 생성)
-posts.json
+# posts.json은 .gitignore에 넣지 말고 Git에 커밋해야 함
 
 # Dependencies
 node_modules/

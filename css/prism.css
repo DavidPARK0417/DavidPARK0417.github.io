@@ -265,7 +265,7 @@ pre[class*="language-"] {
     margin: 1rem 0;
     font-size: 0.8em;
   }
-  
+
   :not(pre) > code[class*="language-"] {
     font-size: 0.8em;
     padding: 0.15rem 0.3rem;

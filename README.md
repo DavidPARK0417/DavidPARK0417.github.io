@@ -18,11 +18,11 @@ GitHub Pages를 사용한 정적 블로그입니다.
 
 ```markdown
 ---
-title: '게시글 제목'
+title: "게시글 제목"
 date: 2025-01-26
-tags: ['JavaScript', 'Web']
-category: 'Development'
-description: '게시글 설명'
+tags: ["JavaScript", "Web"]
+category: "Development"
+description: "게시글 설명"
 ---
 
 # 제목
@@ -36,6 +36,7 @@ description: '게시글 설명'
 ## 🛠️ 로컬 테스트
 
 1. 로컬 웹 서버 실행:
+
 ```bash
 # Python 3
 python -m http.server 8000
@@ -51,13 +52,16 @@ npx http-server
 ## 💬 Giscus 댓글 설정
 
 ### 1. GitHub Discussions 활성화
-- 저장소 Settings > General > Features > Discussions 활성화
+
+- 저장소 Settings → General → Features → Discussions 활성화
 
 ### 2. Giscus 앱 설치
+
 - https://github.com/apps/giscus 접속
 - DavidPARK0417/DavidPARK0417.github.io 저장소에 설치
 
 ### 3. Giscus 설정
+
 - https://giscus.app/ko 접속
 - 저장소: `DavidPARK0417/DavidPARK0417.github.io`
 - 매핑: `pathname`
