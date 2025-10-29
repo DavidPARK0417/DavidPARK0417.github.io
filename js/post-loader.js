@@ -31,7 +31,6 @@ class PostLoader {
       const postData = await this.loadPost(fileName);
       this.renderPost(postData);
       this.updatePageMeta(postData);
-      this.loadGiscus();
 
       console.log("✅ 게시글이 성공적으로 로드되었습니다.");
     } catch (error) {
@@ -222,46 +221,6 @@ class PostLoader {
     }
 
     console.log("✅ 페이지 메타데이터 업데이트 완료");
-  }
-
-  /**
-   * Giscus 댓글 로드
-   */
-  loadGiscus() {
-    if (!this.giscusContainer) {
-      console.log("⚠️ Giscus 컨테이너를 찾을 수 없습니다.");
-      return;
-    }
-
-    console.log("💬 Giscus 댓글 시스템 로드 중...");
-
-    // 기존 Giscus 스크립트 제거
-    const existingScript = document.querySelector('script[src*="giscus"]');
-    if (existingScript) {
-      existingScript.remove();
-    }
-
-    // Giscus 스크립트 생성
-    const script = document.createElement("script");
-    script.src = "https://giscus.app/client.js";
-    script.setAttribute("data-repo", "DavidPARK0417/DavidPARK0417.github.io");
-    script.setAttribute("data-repo-id", "YOUR_REPO_ID"); // 실제 값으로 교체 필요
-    script.setAttribute("data-category", "General");
-    script.setAttribute("data-category-id", "YOUR_CATEGORY_ID"); // 실제 값으로 교체 필요
-    script.setAttribute("data-mapping", "pathname");
-    script.setAttribute("data-strict", "0");
-    script.setAttribute("data-reactions-enabled", "1");
-    script.setAttribute("data-emit-metadata", "1");
-    script.setAttribute("data-input-position", "bottom");
-    script.setAttribute("data-theme", "preferred_color_scheme");
-    script.setAttribute("data-lang", "ko");
-    script.setAttribute("data-loading", "lazy");
-    script.crossOrigin = "anonymous";
-    script.async = true;
-
-    this.giscusContainer.appendChild(script);
-
-    console.log("✅ Giscus 댓글 시스템 로드 완료");
   }
 
   /**

@@ -9,12 +9,12 @@ class GiscusManager {
     this.giscusConfig = {
       repo: "DavidPARK0417/DavidPARK0417.github.io",
       repoId: "R_kgDOQKfvVQ",
-      category: "Announcements", // General → Announcements로 변경
+      category: "General",
       categoryId: "DIC_kwDOQKfvVc4CxMbS",
       mapping: "pathname",
       strict: "0",
       reactionsEnabled: "1",
-      emitMetadata: "0",
+      emitMetadata: "1",
       inputPosition: "bottom",
       lang: "ko",
       crossorigin: "anonymous",
