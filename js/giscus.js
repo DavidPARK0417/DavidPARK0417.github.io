@@ -9,7 +9,7 @@ class GiscusManager {
     this.giscusConfig = {
       repo: "DavidPARK0417/DavidPARK0417.github.io",
       repoId: "R_kgDOQKfvVQ",
-      category: "General",
+      category: "Announcements", // General → Announcements로 변경
       categoryId: "DIC_kwDOQKfvVc4CxMbS",
       mapping: "pathname",
       strict: "0",
@@ -20,6 +20,7 @@ class GiscusManager {
       crossorigin: "anonymous",
     };
 
+    console.log("🔧 Giscus 설정:", this.giscusConfig);
     this.init();
   }
 
@@ -41,15 +42,19 @@ class GiscusManager {
       return;
     }
 
+    console.log("🔄 Giscus 로딩 시작...");
+
     // 기존 스크립트 제거 (테마 변경 시 재로드를 위해)
     const existingScript = this.container.querySelector("script");
     if (existingScript) {
+      console.log("🗑️ 기존 Giscus 스크립트 제거");
       existingScript.remove();
     }
 
     // 기존 iframe 제거
     const existingFrame = this.container.querySelector("iframe.giscus-frame");
     if (existingFrame) {
+      console.log("🗑️ 기존 Giscus iframe 제거");
       existingFrame.remove();
     }
 
@@ -73,9 +78,18 @@ class GiscusManager {
     script.setAttribute("crossorigin", this.giscusConfig.crossorigin);
     script.async = true;
 
+    // 스크립트 로드 성공/실패 이벤트 추가
+    script.onload = () => {
+      console.log("✅ Giscus 스크립트 로드 성공");
+    };
+    script.onerror = (error) => {
+      console.error("❌ Giscus 스크립트 로드 실패:", error);
+    };
+
     this.container.appendChild(script);
 
-    console.log(`💬 Giscus 댓글이 로드되었습니다. (테마: ${theme})`);
+    console.log(`💬 Giscus 댓글 설정 완료 (테마: ${theme})`);
+    console.log("📋 현재 페이지 경로 (mapping):", window.location.pathname);
   }
 
   /**
@@ -122,11 +136,52 @@ class GiscusManager {
   }
 
   /**
+   * Giscus iframe 로드 감지
+   */
+  observeGiscusIframe() {
+    const observer = new MutationObserver((mutations) => {
+      const iframe = document.querySelector("iframe.giscus-frame");
+      if (iframe) {
+        console.log("✅ Giscus iframe이 로드되었습니다!");
+        console.log("📍 iframe src:", iframe.src);
+
+        // iframe 로드 완료 감지
+        iframe.addEventListener("load", () => {
+          console.log("✅ Giscus iframe 로드 완료!");
+        });
+
+        observer.disconnect(); // iframe을 찾았으므로 관찰 중단
+      }
+    });
+
+    observer.observe(this.container, {
+      childList: true,
+      subtree: true,
+    });
+
+    // 10초 후에도 iframe이 없으면 경고
+    setTimeout(() => {
+      const iframe = document.querySelector("iframe.giscus-frame");
+      if (!iframe) {
+        console.error("❌ Giscus iframe이 10초 안에 로드되지 않았습니다.");
+        console.error("💡 확인사항:");
+        console.error("  1. GitHub Discussion이 활성화되어 있나요?");
+        console.error("  2. Giscus 앱이 저장소에 설치되어 있나요?");
+        console.error("  3. 저장소가 Public인가요?");
+        console.error("  4. Network 탭에서 giscus.app 관련 요청을 확인하세요");
+      }
+    }, 10000);
+  }
+
+  /**
    * 초기화
    */
   init() {
     // Giscus 로드
     this.loadGiscus();
+
+    // iframe 로드 감지
+    this.observeGiscusIframe();
 
     // 테마 변경 감지 설정
     this.setupThemeObserver();
