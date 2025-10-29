@@ -11,7 +11,8 @@ class GiscusManager {
       repoId: "R_kgDOQKfvVQ",
       category: "General",
       categoryId: "DIC_kwDOQKfvVc4CxMbS",
-      mapping: "pathname",
+      // 각 포스트가 querystring(예: ?slug=)으로 구분되므로 pathname 대신 url 매핑 사용
+      mapping: "url",
       strict: "0",
       reactionsEnabled: "1",
       emitMetadata: "1",
@@ -21,6 +22,7 @@ class GiscusManager {
     };
 
     console.log("🔧 Giscus 설정:", this.giscusConfig);
+    this.loggingAttached = false;
     this.init();
   }
 
@@ -90,6 +92,7 @@ class GiscusManager {
 
     console.log(`💬 Giscus 댓글 설정 완료 (테마: ${theme})`);
     console.log("📋 현재 페이지 경로 (mapping):", window.location.pathname);
+    console.log("🔗 현재 페이지 URL (매핑 기준):", window.location.href);
   }
 
   /**
@@ -174,14 +177,95 @@ class GiscusManager {
   }
 
   /**
+   * giscus 메시지 이벤트 로깅 및 에러 안내 표시
+   */
+  attachGiscusEventLogging() {
+    if (this.loggingAttached) return;
+
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "https://giscus.app") return;
+      const payload = event.data && event.data.giscus;
+      if (!payload) return;
+
+      console.log("📨 giscus 메시지:", payload);
+
+      // 에러 처리
+      if (payload.error) {
+        console.error("❌ Giscus 에러:", payload.error);
+        const message =
+          typeof payload.error === "string"
+            ? payload.error
+            : payload.error.message || "Unknown error";
+        // 화면 경고는 표시하지 않고 콘솔 로그만 유지
+      }
+
+      // Discussion 생성/탐색 관련 힌트
+      if (payload.discussion) {
+        console.log("🧵 연결된 Discussion:", payload.discussion);
+      }
+      if (payload.resize && payload.resize.height) {
+        console.log("📏 giscus 높이 변경:", payload.resize.height);
+      }
+    });
+
+    this.loggingAttached = true;
+    console.log("🛰️ giscus 이벤트 로깅이 활성화되었습니다.");
+  }
+
+  /**
+   * 에러 배너 표시
+   */
+  showGiscusWarning(mainText, checklist) {
+    if (!this.container) return;
+
+    // 기존 경고 제거
+    const prev = this.container.querySelector(".giscus-warning");
+    if (prev) prev.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "giscus-warning";
+    wrapper.setAttribute(
+      "style",
+      "border:1px solid #f0a500;padding:12px;border-radius:8px;background:#fff7e6;color:#663c00;margin-bottom:12px;font-size:14px;"
+    );
+
+    const title = document.createElement("div");
+    title.textContent = mainText;
+    title.style.fontWeight = "600";
+    title.style.marginBottom = "6px";
+    wrapper.appendChild(title);
+
+    if (Array.isArray(checklist) && checklist.length) {
+      const ul = document.createElement("ul");
+      ul.setAttribute("style", "margin:0;padding-left:18px");
+      checklist.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      wrapper.appendChild(ul);
+    }
+
+    this.container.prepend(wrapper);
+  }
+
+  /**
    * 초기화
    */
   init() {
+    // 기존 경고 배너가 있다면 제거
+    const prev =
+      this.container && this.container.querySelector(".giscus-warning");
+    if (prev) prev.remove();
+
     // Giscus 로드
     this.loadGiscus();
 
     // iframe 로드 감지
     this.observeGiscusIframe();
+
+    // 이벤트 로깅 활성화
+    this.attachGiscusEventLogging();
 
     // 테마 변경 감지 설정
     this.setupThemeObserver();
